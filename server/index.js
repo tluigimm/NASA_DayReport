@@ -57,12 +57,13 @@ app.post('/send_date', async (req, res) => {
                  error: e,
               });
             });
+
         console.log("RESPONSE APOD: ", responseApod);
         console.log("--------------------------------");
         console.log("RESPONSE NeoWs: ", responseNeows);
         res.json({
             resApod: responseApod,
-            resNeows: responseNeows
+            resNeows: responseNeows,
         });
     } catch (err) {
         console.log(err);

@@ -21,14 +21,12 @@ function App() {
       for (var key in neoJson) {
         setNeoList(neoJson[key])
       }
-
       setUrlImage(res.data.resApod.url);
       setImageTitle(res.data.resApod.title);
       setImageText(res.data.resApod.explanation);
     });
   };
 
-  
   for (let neo of neoList) {
     neos.push(<div>
       name: {neo.name} <br/>
