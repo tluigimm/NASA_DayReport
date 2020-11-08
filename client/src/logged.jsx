@@ -9,7 +9,7 @@ export default class Logged extends Component {
     this.state = {
       userId: this.props.location.state.userId,
       uname: this.props.location.state.uname,
-      date: '',
+      date: this.props.location.state.date,
       neoList: [],
       urlImage: '',
       imageTitle: '',
@@ -18,6 +18,35 @@ export default class Logged extends Component {
       ti: true
     };
   }
+
+  componentWillMount(){
+      Axios.post('http://localhost:7002/send_date', {
+          d: this.state.date
+        }).then((res) => {
+          console.log(res)
+          var neoJson = res.data.resNeows.near_earth_objects;
+          for (var key in neoJson) {
+            this.setState({neoList: neoJson[key]});
+          }
+          console.log(res.data.resApod.url)
+          this.setState({urlImage: res.data.resApod.url});
+          this.setState({imageTitle: res.data.resApod.title});
+          this.setState({imageText: res.data.resApod.explanation});
+
+          var n = this.state.neos;
+          for (let neo of this.state.neoList) {
+            n.push( <div>
+              name: {neo.name} <br/>
+              average estimated diameter (m): {(neo.estimated_diameter.meters.estimated_diameter_min 
+                                                 + neo.estimated_diameter.meters.estimated_diameter_max) / 2}<br/>
+              relative velocity (km/s): {neo.close_approach_data[0].relative_velocity.kilometers_per_second}<br/>
+              miss distance (astronomical): {neo.close_approach_data[0].miss_distance.astronomical}<br/>
+              orbiting body: {neo.close_approach_data[0].orbiting_body}<br/>
+              absolute magnitude (h): {neo.absolute_magnitude_h}<br/><br/>
+            </div>)};
+          this.setState({neos: n});
+    })};
+  
 
   render() {
     const sendDate = () => {
@@ -50,13 +79,15 @@ export default class Logged extends Component {
         this.props.history.push({pathname:'/dates', state: {
           userId: this.state.userId,
           uname: this.state.uname
-    }})}
+    }})};
 
     const addDate = () => {
         Axios.post('http://localhost:7002/add_date', {
           id: this.state.userId,
           d: this.state.date
         })};
+
+
     
     return (
       <div className="App">

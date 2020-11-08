@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, Component} from "react";
 import Axios from 'axios';
-import {BrowserRouter as Router,Route, Redirect,Switch} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default class Dates extends Component {
   constructor(props){
@@ -24,7 +24,16 @@ export default class Dates extends Component {
         let mounth = date.slice(5, 7);
         let day = date.slice(8, 10);
         console.log(day+"/"+mounth+"/"+year);
-        x.push(<div>{day}/{mounth}/{year} <button> go to date </button></div>);}
+        x.push(<div>{day}/{mounth}/{year} <button onClick = {() => {
+           console.log(this.state.userId)
+           console.log(this.state.username)
+           console.log(date);
+           this.props.history.push({pathname:'/logged', state: {
+             userId: this.state.userId,
+             uname: this.state.username,
+             date: date.slice(0,10)
+    }})
+        }}> go to date </button></div>);}
       this.setState({dates: x});
       console.log(this.state.dates);
   })};
