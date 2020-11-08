@@ -18,18 +18,58 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(morgan('dev'));
 app.use(helmet());
-app.use(bodyParser.urlencoded({extended: true}));
 
-app.get("/login", (req, res) => {
-    const u = req.body.u; 
-    const p = req.body.p;
-    conn.query(`SELECT * FROM user WHERE (name,pswd)=(${u},${p});`, (err, results, fields) => {
+app.post("/get_users", async (req, res) => {
+    try{
+        const u = req.body.u; 
+        const p = req.body.p;
+        console.log(u);
+        console.log(p);
+        conn.query("SELECT * FROM user WHERE (name, pswd)=(?,?);", [u,p], (err, results) => {
+            if (err) throw err;
+            res.json(results);
+    })}catch (err) {
+        console.log(err);
+    }});
+
+app.post("/add_user", async(req, res) => {
+    try{
+        const u = req.body.u; 
+        const p = req.body.p;
+        conn.query("INSERT INTO user (name, pswd) VALUES (?,?);", [u,p], (err) => {
+            if (err) throw err;
+            conn.query("SELECT * FROM user WHERE (name, pswd)=(?,?);", [u,p], (err, results) => {
+                if (err) throw err;
+                res.json(results);
+            })
+        });   
+    }catch(err){
+        console.log(err);
+    }}); 
+
+app.post("/get_dates", async(req, res) => {
+    const id = req.body.id; 
+    conn.query(`SELECT * FROM date WHERE userId=${id};`, (err, results) => {
          if (err) throw err;
          res.json(results);
     });
 });
+
+app.post("/add_date", async(req, res)=>{
+    try{
+        const id = req.body.id; 
+        const d = req.body.d;
+        console.log(id);
+        console.log(d);
+        conn.query("INSERT INTO date (userId, date) VALUES (?,?);", [id,d], (err, results) => {
+         if (err) throw err;
+         res.json(results);
+    })}catch (err) {
+        console.log(err);
+    }});
 
 app.post('/send_date', async (req, res) => {
     try{
@@ -75,4 +115,3 @@ app.post('/send_date', async (req, res) => {
 app.listen(7002, async () => {
         console.log("running on port 7002!");
 });
-
