@@ -31,9 +31,8 @@ export default class Dates extends Component {
            this.props.history.push({pathname:'/logged', state: {
              userId: this.state.userId,
              uname: this.state.username,
-             date: date.slice(0,10)
-    }})
-        }}> go to date </button></div>);}
+             date: year+"-"+mounth+"-"+day
+    }})}}> go to date </button></div>);}
       this.setState({dates: x});
       console.log(this.state.dates);
   })};
@@ -41,7 +40,7 @@ export default class Dates extends Component {
   render() {
     return (
       <div className="App">
-        <h2> {this.state.username} dates </h2>
+        <h2> {this.state.username}'s dates </h2>
         {this.state.dates}       
       </div>
     );

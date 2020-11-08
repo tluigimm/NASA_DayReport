@@ -30,7 +30,7 @@ export default class Main extends Component {
           this.setState({imageTitle: res.data.resApod.title});
           this.setState({imageText: res.data.resApod.explanation});
 
-          var n = this.state.neos;
+          var n = [];
           for (let neo of this.state.neoList) {
             n.push( <div>
               name: {neo.name} <br/>

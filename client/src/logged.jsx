@@ -33,7 +33,7 @@ export default class Logged extends Component {
           this.setState({imageTitle: res.data.resApod.title});
           this.setState({imageText: res.data.resApod.explanation});
 
-          var n = this.state.neos;
+          var n = [];
           for (let neo of this.state.neoList) {
             n.push( <div>
               name: {neo.name} <br/>
@@ -61,7 +61,7 @@ export default class Logged extends Component {
           this.setState({imageTitle: res.data.resApod.title});
           this.setState({imageText: res.data.resApod.explanation});
 
-          var n = this.state.neos;
+          var n = [];
           for (let neo of this.state.neoList) {
             n.push( <div>
               name: {neo.name} <br/>
@@ -102,7 +102,7 @@ export default class Logged extends Component {
         <button onClick={sendDate}> send </button>
         <br/><center>
           <h3>{this.state.imageTitle}</h3>
-          <img src={this.state.urlImage}/>
+          <img src={this.state.urlImage}/><br />
           <button onClick={addDate} > add date </button>
           <p>{this.state.imageText}</p>
         </center> <br/>
