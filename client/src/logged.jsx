@@ -76,16 +76,17 @@ export default class Logged extends Component {
     })};
     
     const seeDates = () => {
-        this.props.history.push({pathname:'/dates', state: {
-          userId: this.state.userId,
-          uname: this.state.uname
+      this.props.history.push({pathname:'/dates', state: {
+        userId: this.state.userId,
+        uname: this.state.uname
     }})};
 
     const addDate = () => {
-        Axios.post('http://localhost:7002/add_date', {
-          id: this.state.userId,
-          d: this.state.date
-        })};
+      alert("date has been added");
+      Axios.post('http://localhost:7002/add_date', {
+        id: this.state.userId,
+        d: this.state.date
+      })};
 
 
     

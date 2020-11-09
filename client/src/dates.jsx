@@ -14,10 +14,12 @@ export default class Dates extends Component {
   }
 
   componentWillMount(){
+    alert("in dates page");
     Axios.post('http://localhost:7002/get_dates', {
       id: this.state.userId
     }).then((res) => {
       let x = [];
+      console.log(res.data);
       for (var d in res.data){
         var date = res.data[d].date;
         let year = date.slice(0, 4);
@@ -25,21 +27,24 @@ export default class Dates extends Component {
         let day = date.slice(8, 10);
         console.log(day+"/"+mounth+"/"+year);
         x.push(<div>{day}/{mounth}/{year} <button onClick = {() => {
-           console.log(this.state.userId)
-           console.log(this.state.username)
-           console.log(date);
-           this.props.history.push({pathname:'/logged', state: {
+          this.props.history.push({pathname:'/logged', state: {
              userId: this.state.userId,
              uname: this.state.username,
              date: year+"-"+mounth+"-"+day
     }})}}> go to date </button></div>);}
       this.setState({dates: x});
+      console.log(x);
       console.log(this.state.dates);
   })};
 
   render() {
     return (
       <div className="App">
+        <button onClick={() =>{
+           this.props.history.push({pathname:'/logged', state: {
+             userId: this.state.userId,
+             uname: this.state.username
+        }})}}> Go Back </button>
         <h2> {this.state.username}'s dates </h2>
         {this.state.dates}       
       </div>

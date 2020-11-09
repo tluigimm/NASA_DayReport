@@ -25,7 +25,10 @@ export default class Login extends Component {
         if (userArray.length != 0){
           var userId = res.data[0].id;
           var uname = res.data[0].name;
-          this.props.history.push({pathname:'/logged', state: {userId: userId, uname: uname}});
+          this.props.history.push({pathname:'/logged', state: {
+            userId: userId,
+            uname: uname
+          }});
         }else{
           alert("username or password does not exist");
         }

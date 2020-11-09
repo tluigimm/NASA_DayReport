@@ -51,6 +51,7 @@ app.post("/add_user", async(req, res) => {
     }}); 
 
 app.post("/get_dates", async(req, res) => {
+    console.log("kalabanga")
     const id = req.body.id; 
     conn.query(`SELECT * FROM date WHERE userId=${id};`, (err, results) => {
          if (err) throw err;
