@@ -14,7 +14,6 @@ export default class Dates extends Component {
   }
 
   componentWillMount(){
-    alert("in dates page");
     Axios.post('http://localhost:7002/get_dates', {
       id: this.state.userId
     }).then((res) => {
@@ -31,7 +30,15 @@ export default class Dates extends Component {
              userId: this.state.userId,
              uname: this.state.username,
              date: year+"-"+mounth+"-"+day
-    }})}}> go to date </button></div>);}
+          }})}}> go to date </button>
+          <button onClick = {() => {
+            Axios.post('http://localhost:7002/del_date', {
+              id: this.state.userId,
+              d: year+"-"+mounth+"-"+day
+          });
+            window.location.reload();
+          }}> delete </button>
+          </div>);}
       this.setState({dates: x});
       console.log(x);
       console.log(this.state.dates);

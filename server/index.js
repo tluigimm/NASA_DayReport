@@ -72,6 +72,17 @@ app.post("/add_date", async(req, res)=>{
         console.log(err);
     }});
 
+app.post("/del_date", async(req, res)=>{
+    try{
+        const id = req.body.id; 
+        const d = req.body.d;
+        conn.query("DELETE FROM date WHERE (userId, date)=(?,?);", [id,d], (err, results) => {
+         if (err) throw err;
+         res.json(results);
+    })}catch (err) {
+        console.log(err);
+    }});
+
 app.post('/send_date', async (req, res) => {
     try{
         const d = req.body.d;
